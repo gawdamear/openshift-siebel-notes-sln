@@ -75,7 +75,9 @@ pipeline {
             script {
                 echo 'preambling...'
                 git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
-                sh "dotnet restore api/api.csproj" 
+                dir('app') { // -- if using git clone, the codes are cloned into <project_folder>/app
+                  sh "dotnet restore ../api/api.csproj --configfile ../sampledotnet/nuget.config --force --verbosity d"
+                }
             }
         }
     }
