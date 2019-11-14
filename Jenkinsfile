@@ -75,7 +75,7 @@ pipeline {
             script {
                 echo 'preambling...'
                 git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
-                sh "dotnet restore api\api.csproj" 
+                sh "dotnet restore api/api.csproj" 
             }
         }
     }
