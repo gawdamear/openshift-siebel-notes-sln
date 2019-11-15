@@ -7,7 +7,6 @@ pipeline {
     gitBranch ="master"
 
     checkoutFolder = "/tmp/workspace/${env.JOB_NAME}/app"
-
     solutionFile = "siebelnotes.sln"
   }    
 
@@ -18,11 +17,18 @@ pipeline {
       }
     }    
 
-    stage('Restore and clean') {
+    stage('Restore') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet restore ../siebelnotes.sln"
-          sh "dotnet clean ../siebelnotes.sln"
+          sh "dotnet clean ../${solutionFile}"
+        }
+      }
+    }
+
+    stage('Clean') {
+      steps {
+        dir(checkoutFolder) {
+          //sh "dotnet clean ../siebelnotes.sln"
         }
       }
     }
