@@ -2,16 +2,15 @@ pipeline {
   agent { label 'dotnet-22' }
 
   environment {
-    GIT_REPO="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
-    GIT_USER="dotnettest-github"
-    GIT_BRANCH="master"
-    PORT = 8081;
+    gitRepo ="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
+    gitUser ="dotnettest-github"
+    gitBranch ="master"
   }    
 
   stages {
-    stage('Clone') {
+    stage('Checkout code') {
       steps {
-        git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
+        git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }    
 
@@ -19,6 +18,30 @@ pipeline {
       steps {
         dir('app') {
           sh "dotnet restore ../siebelnotes.sln"
+        }
+      }
+    }
+
+    stage('Build') {
+      steps {
+        dir('app') {
+          //sh "dotnet restore ../siebelnotes.sln"
+        }
+      }
+    }
+
+    stage('Publish') {
+      steps {
+        dir('app') {
+          //sh "dotnet restore ../siebelnotes.sln"
+        }
+      }
+    }
+
+    stage('Tests') {
+      steps {
+        dir('app') {
+          //sh "dotnet restore ../siebelnotes.sln"
         }
       }
     }
