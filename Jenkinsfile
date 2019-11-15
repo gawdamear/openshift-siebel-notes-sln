@@ -13,42 +13,42 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+        git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+      }
+    }    
+
+    stage('Restore') {
+      steps {
+        dir(checkoutFolder) {
+          sh "dotnet restore ${solutionName}"
+        }
       }
     }
 
     stage('Clean') {
       steps {
         dir(checkoutFolder) {
-          //sh "dotnet clean ${solutionName}"
-        }
-      }
-    }
-    
-    stage('Restore') {
-      steps {
-        dir(checkoutFolder) {
-          //sh "dotnet restore ${solutionName}"
+          sh "dotnet clean ${solutionName}"
         }
       }
     }
 
     stage('Test') {
       steps {
-        parallel (
-            "Unit tests" : {
-                dir(checkoutFolder) {
-                  //sh "dotnet test ${solutionName}"
-                }
-            },
-            "Integration tests" : {
-                dir(checkoutFolder) {
-                  echo "integration testing..."
-                }
-            }
-        )
-      }
-    } 
+          parallel (
+              "Unit tests" : {
+                  dir(checkoutFolder) {
+                    sh "dotnet test ${solutionName}"
+                  }
+              },
+              "Integration tests" : {
+                  dir(checkoutFolder) {
+                    echo "integration testing..."
+                  }
+              }
+          )
+      } 
+    }
   }  
 }
 
