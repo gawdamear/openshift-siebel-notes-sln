@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<assemblies timestamp="11/15/2019 15:00:16">
+  <assembly name="C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\bin\Debug\netcoreapp2.2\UnitTests.dll" run-date="2019-11-15" run-time="15:00:16" total="1" passed="1" failed="0" skipped="0" time="0.008" errors="0">
+    <errors />
+    <collection total="1" passed="1" failed="0" skipped="0" name="Test collection for UnitTests.XmlManagerUnitTest" time="0.008">
+      <test name="UnitTests.XmlManagerUnitTest.ValidateSchema_Valid_Xml" type="UnitTests.XmlManagerUnitTest" method="ValidateSchema_Valid_Xml" time="0.0080000" result="Pass">
+        <traits />
+      </test>
+    </collection>
+  </assembly>
+</assemblies>

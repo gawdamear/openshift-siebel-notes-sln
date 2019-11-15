@@ -14,7 +14,7 @@ pipeline {
     stage('Checkout') {
       steps {
         echo "Checkout..."
-        //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+        git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }    
 
@@ -22,7 +22,7 @@ pipeline {
       steps {
         dir(checkoutFolder) {
           echo "Clean..."
-          //sh "dotnet clean ${solutionName}"
+          sh "dotnet clean ${solutionName}"
         }
       }
     }
@@ -31,7 +31,7 @@ pipeline {
       steps {
         dir(checkoutFolder) {
           echo "Restore..."
-          //sh "dotnet restore ${solutionName}"
+          sh "dotnet restore ${solutionName}"
         }
       }
     }
@@ -42,7 +42,7 @@ pipeline {
             "Unit tests" : {
                 dir(checkoutFolder) {
                   echo "Unit tests..."
-                  //sh "dotnet test ${solutionName}"
+                  sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
                 }
             },
             "Integration tests" : {
@@ -53,11 +53,6 @@ pipeline {
         )
       } 
     }    
-  }  
-  post {
-      always {
-          cleanWs()
-      }
   }  
 }
 
