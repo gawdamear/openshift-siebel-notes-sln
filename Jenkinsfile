@@ -1,3 +1,20 @@
+node("dotnet-22") {
+  stage('clone sources') {
+    sh "git clone https://github.com/redhat-developer/s2i-dotnetcore-ex --branch dotnetcore-2.2 ."
+  }
+  stage('publish') {
+    dir('app') {
+      sh "dotnet restore"
+      sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+    }
+  }
+  stage('create image') {
+    dir('app') {
+      //sh 'oc new-build --name=dotnetapp dotnet:2.2 --binary=true || true'
+      //sh 'oc start-build dotnetapp --from-dir=bin/Release/netcoreapp2.2/publish --follow'
+    }
+  }
+}
 
 /*pipeline {
   agent none
@@ -56,7 +73,7 @@
   //}
 //}
 
-
+/*
 pipeline {
   agent {
     node("dotnetcore22")
@@ -120,3 +137,4 @@ pipeline {
     }         
   }
 }
+*/
