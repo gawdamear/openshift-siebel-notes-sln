@@ -55,11 +55,9 @@ pipeline {
     }    
   }  
   post {
-    steps {
       always {
           cleanWs()
       }
-    }
   }  
 }
 
