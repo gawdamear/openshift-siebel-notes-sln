@@ -5,7 +5,10 @@ pipeline {
     gitRepo ="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
     gitUser ="dotnettest-github"
     gitBranch ="master"
+
     checkoutFolder = "/tmp/workspace/${env.JOB_NAME}/app"
+
+    solutionFile = "siebelnotes.sln"
   }    
 
   stages {
@@ -19,22 +22,15 @@ pipeline {
     stage('Restore') {
       steps {
         dir(checkoutFolder) {
-          //sh "dotnet restore ../siebelnotes.sln"
+          sh "dotnet restore "${checkoutFolder}" + "${solutionFile}""
+          //sh "dotnet clean ../siebelnotes.sln"
         }
       }
     }
 
     stage('Build') {
       steps {
-        dir('app') {
-          //sh "dotnet restore ../siebelnotes.sln"
-        }
-      }
-    }
-
-    stage('Publish') {
-      steps {
-        dir('app') {
+        dir(checkoutFolder) {
           //sh "dotnet restore ../siebelnotes.sln"
         }
       }
@@ -42,7 +38,7 @@ pipeline {
 
     stage('Tests') {
       steps {
-        dir('app') {
+        dir(checkoutFolder) {
           //sh "dotnet restore ../siebelnotes.sln"
         }
       }
