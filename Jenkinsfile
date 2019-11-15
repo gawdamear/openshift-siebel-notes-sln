@@ -1,11 +1,12 @@
 node("dotnet-22") {
   stage('clone sources') {
-    sh "git clone https://github.com/redhat-developer/s2i-dotnetcore-ex --branch dotnetcore-2.2 ."
+    git credentialsId: "dotnettest-github", url: "https://github.com/gawdamear/openshift-siebel-notes-sln.git"
+    //sh "git clone https://github.com/redhat-developer/s2i-dotnetcore-ex --branch dotnetcore-2.2 ."
   }
   stage('publish') {
     dir('app') {
-      sh "dotnet restore"
-      sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+      //sh "dotnet restore"
+      //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
     }
   }
   stage('create image') {
