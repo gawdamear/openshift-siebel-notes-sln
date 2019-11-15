@@ -20,7 +20,7 @@ pipeline {
     stage('Restore') {
       steps {
         dir(checkoutFolder) {
-          //sh "dotnet restore ${solutionName}"
+          sh "dotnet restore ${solutionName}"
         }
       }
     }
@@ -35,8 +35,9 @@ pipeline {
 
     stage('Test') {
       steps {
+        sh "dotnet test"
         dir(checkoutFolder) {
-          sh "dotnet test"
+          sh "dotnet test ../UnitTests/UnitTests.csproj"
         }
       }
     }    
