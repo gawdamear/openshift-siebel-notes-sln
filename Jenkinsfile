@@ -12,18 +12,17 @@ pipeline {
   }    
 
   stages {
-    stage('Checkout code') {
+    stage('Checkout') {
       steps {
-        echo checkoutFolder
-        //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+        git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }    
 
-    stage('Restore') {
+    stage('Restore and clean') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet restore " + ${checkoutFolder} + ${solutionFile}
-          //sh "dotnet clean ../siebelnotes.sln"
+          sh "dotnet restore ../siebelnotes.sln"
+          sh "dotnet clean ../siebelnotes.sln"
         }
       }
     }
@@ -36,12 +35,17 @@ pipeline {
       }
     }
 
-    stage('Tests') {
-      steps {
-        dir(checkoutFolder) {
-          //sh "dotnet restore ../siebelnotes.sln"
-        }
-      }
+    stage('Test') {
+        steps {
+            parallel (
+                "Unit tests" : {
+                    echo "unit testing..."
+                },
+                "Integration tests" : {
+                    echo "integration testing..."
+                }
+            )
+        } 
     }
   }  
 }
