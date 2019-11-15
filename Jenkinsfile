@@ -22,7 +22,7 @@ pipeline {
     stage('Restore') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet restore "${checkoutFolder}" + "${solutionFile}""
+          sh "dotnet restore " + ${checkoutFolder} + ${solutionFile}
           //sh "dotnet clean ../siebelnotes.sln"
         }
       }
