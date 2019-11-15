@@ -38,7 +38,7 @@ pipeline {
             parallel (
                 "Unit tests" : {
                     dir(checkoutFolder) {
-                      echo "unit testing..."
+                      sh "dotnet test ${solutionName}"
                     }
                 },
                 "Integration tests" : {
