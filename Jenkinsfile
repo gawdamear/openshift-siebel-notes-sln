@@ -20,7 +20,7 @@ pipeline {
     stage('Restore') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet clean ${solutionName}"
+          //sh "dotnet restore ${solutionName}"
         }
       }
     }
@@ -28,15 +28,7 @@ pipeline {
     stage('Clean') {
       steps {
         dir(checkoutFolder) {
-          //sh "dotnet clean ../${solutionName}"
-        }
-      }
-    }
-
-    stage('Build') {
-      steps {
-        dir(checkoutFolder) {
-          //sh "dotnet restore ../${solutionName}"
+          sh "dotnet clean ${solutionName}"
         }
       }
     }
@@ -45,7 +37,7 @@ pipeline {
         steps {
             parallel (
                 "Unit tests" : {
-                    echo "unit testing..."
+                    //sh "dotnet test ${solutionName}"
                 },
                 "Integration tests" : {
                     echo "integration testing..."
