@@ -43,7 +43,9 @@ pipeline {
                 dir(checkoutFolder) {
                   echo "Unit tests..."
                   sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
-                  step([$class: 'XUnitBuilder', testResults: '/TestResults/*.xml'])
+                  script {
+                    step([$class: 'XUnitBuilder', testResults: '/TestResults/*.xml'])
+                  }
                   
                   //script {
                   //  step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
