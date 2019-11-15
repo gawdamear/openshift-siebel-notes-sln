@@ -1,5 +1,7 @@
-pipeline {
-  agent { label 'dotnet-22' }
+//pipeline {
+//  agent { label 'dotnet-22' }
+
+node("dotnet-22") {
 
   environment {
     gitRepo ="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
@@ -12,32 +14,32 @@ pipeline {
 
   //stages {
     stage('Checkout') {
-      steps {
+      //steps {
         echo "Checkout..."
         //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
-      }
+      //}
     }    
 
     stage('Clean') {
-      steps {
+      //steps {
         dir(checkoutFolder) {
           echo "Clean..."
           //sh "dotnet clean ${solutionName}"
         }
-      }
+      //}
     }
 
     stage('Restore') {
-      steps {
+      //steps {
         dir(checkoutFolder) {
           echo "Restore..."
           //sh "dotnet restore ${solutionName}"
         }
-      }
+      //}
     }
 
     stage('Test') {
-      steps {
+      //steps {
         parallel (
             "Unit tests" : {
                 dir(checkoutFolder) {
@@ -51,7 +53,7 @@ pipeline {
                 }
             }
         )
-      } 
+      //} 
     }    
   //}  
 }
