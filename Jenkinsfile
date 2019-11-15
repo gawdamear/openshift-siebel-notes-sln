@@ -50,11 +50,6 @@ pipeline {
       } 
     }
   }  
-  post {
-    always {
-      cleanWs()
-    }
-  }
 }
 
 /* WORKING
