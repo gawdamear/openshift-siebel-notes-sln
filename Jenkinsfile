@@ -10,14 +10,15 @@ pipeline {
   stages {
     stage('Checkout code') {
       steps {
-        git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+        echo '$env.JOB_NAME'
+        //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }    
 
     stage('Restore') {
       steps {
         dir('app') {
-          sh "dotnet restore ../siebelnotes.sln"
+          //sh "dotnet restore ../siebelnotes.sln"
         }
       }
     }
