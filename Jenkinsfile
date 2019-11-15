@@ -40,7 +40,9 @@ pipeline {
       steps {
         parallel (
             "Unit tests" : {
-                runUnitTests()
+                script{
+                  runUnitTests()
+                }
                 //dir(appFolder) {
                 //  echo "Unit tests..."
                 //  sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
