@@ -10,7 +10,7 @@ pipeline {
     solutionName = "siebelnotes.sln"
   }    
 
-  stages {
+  //stages {
     stage('Checkout') {
       steps {
         echo "Checkout..."
@@ -53,12 +53,7 @@ pipeline {
         )
       } 
     }    
-  }  
-  post {
-      always {
-          cleanWs()
-      }
-  }  
+  //}  
 }
 
 /* WORKING
