@@ -5,7 +5,7 @@ node("dotnet-22") {
   }
   stage('publish') {
     dir('app') {
-      sh "dotnet restore ./siebelnotes.sln"
+      sh "dotnet restore ../siebelnotes.sln"
       //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
     }
   }
