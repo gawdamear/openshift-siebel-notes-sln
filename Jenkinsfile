@@ -36,7 +36,7 @@ pipeline {
     stage('Test') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet test"
+          sh "dotnet test ${solutionName}"
         }
       }
     }    
