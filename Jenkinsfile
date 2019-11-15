@@ -6,8 +6,8 @@ pipeline {
     gitUser ="dotnettest-github"
     gitBranch ="master"
 
-    checkoutFolder = "/tmp/workspace/${env.JOB_NAME}/app"
-    solutionFile = "siebelnotes.sln"
+    checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
+    solutionName = "siebelnotes.sln"
   }    
 
   stages {
@@ -20,7 +20,7 @@ pipeline {
     stage('Restore') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet clean ../${solutionFile}"
+          sh "dotnet clean ${solutionName}"
         }
       }
     }
@@ -28,7 +28,7 @@ pipeline {
     stage('Clean') {
       steps {
         dir(checkoutFolder) {
-          //sh "dotnet clean ../siebelnotes.sln"
+          //sh "dotnet clean ../${solutionName}"
         }
       }
     }
@@ -36,7 +36,7 @@ pipeline {
     stage('Build') {
       steps {
         dir(checkoutFolder) {
-          //sh "dotnet restore ../siebelnotes.sln"
+          //sh "dotnet restore ../${solutionName}"
         }
       }
     }
