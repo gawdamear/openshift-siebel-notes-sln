@@ -37,10 +37,14 @@ pipeline {
       steps {
             parallel (
                 "Unit tests" : {
-                    echo "unit testing..."
+                    dir(checkoutFolder) {
+                      echo "unit testing..."
+                    }
                 },
                 "Integration tests" : {
-                    echo "integration testing..."
+                    dir(checkoutFolder) {
+                      echo "unit testing..."
+                    }
                 }
             )
        } 
