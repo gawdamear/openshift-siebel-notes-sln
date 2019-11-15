@@ -10,7 +10,7 @@ pipeline {
   stages {
     stage('Checkout code') {
       steps {
-        echo $env.JOB_NAME
+        echo "${env.JOB_NAME}"
         //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }    
