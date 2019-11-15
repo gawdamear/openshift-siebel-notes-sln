@@ -1,3 +1,90 @@
+pipeline {
+  agent { label 'dotnetcore22' }
+
+  environment {
+    GIT_REPO="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
+    GIT_USER="dotnettest-github"
+    GIT_BRANCH="master"
+    PORT = 8081;
+  }    
+
+  stages {
+    
+    stage('Clone') {
+      steps {
+        git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
+      }
+    }
+  }
+}
+
+/*
+pipeline {
+  agent {
+    node("dotnetcore22")
+  }
+  environment {
+    APPLICATION_NAME = 'python-nginx'
+    GIT_REPO="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
+    GIT_USER="1e948897-4d3a-40a2-aedd-53de8dd9f50b"
+    GIT_BRANCH="master"
+    PORT = 8081;
+  }  
+
+  stages {
+    stage('Preamble') {
+        steps {
+            script {
+                echo 'preambling...'
+                git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
+                dir('app') { // -- if using git clone, the codes are cloned into <project_folder>/app
+                  sh "dotnet restore ../api/api.csproj --configfile ../nuget.config" // --force --verbosity d"
+                }
+            }
+        }
+    }
+
+    stage('Test') {
+        steps {
+            parallel (
+                "Unit tests" : {
+                    echo "unit testing..."
+                },
+                "Integration tests" : {
+                    echo "integration testing..."
+                }
+            )
+        } 
+    }
+
+    stage('Build Image') {
+        steps {
+            script {
+                echo 'building image...'
+            }
+        }
+    }  
+
+    stage('Deploy') {
+        steps {
+            script {
+                echo 'deploying image...'
+            }
+        }
+    } 
+
+    stage('System/Smoke test') {
+        steps {
+            script {
+                echo 'sytem/smoke testing...'
+            }
+        }
+    }         
+  }
+}
+*/
+
+/* WORKING
 node("dotnet-22") {
 
   environment {
@@ -38,6 +125,7 @@ node("dotnet-22") {
     }
   }
 }
+*/
 
 /*pipeline {
   agent none
