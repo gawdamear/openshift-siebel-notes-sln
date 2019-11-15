@@ -5,38 +5,40 @@ node("dotnet-22") {
     GIT_USER="dotnettest-github"
     GIT_BRANCH="master"
   }  
-
-  stage('clone sources') {
-    script {
-      git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
-      //sh "git clone https://github.com/redhat-developer/s2i-dotnetcore-ex --branch dotnetcore-2.2 ."
-    }
-  }
-
-  stage('restore') {
-    dir('app') {
-      sh "dotnet restore ../siebelnotes.sln"
-      //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
-    }
-  }
-
-  stage('clean') {
-    dir('app') {
-      sh "dotnet clean"
-      //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
-    }
-  }
-
-  stage('publish') {
-    dir('app') {
-      //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
-    }
-  }  
   
-  stage('create image') {
-    dir('app') {
-      //sh 'oc new-build --name=dotnetapp dotnet:2.2 --binary=true || true'
-      //sh 'oc start-build dotnetapp --from-dir=bin/Release/netcoreapp2.2/publish --follow'
+  stages {
+    stage('clone sources') {
+      script {
+        git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
+        //sh "git clone https://github.com/redhat-developer/s2i-dotnetcore-ex --branch dotnetcore-2.2 ."
+      }
+    }
+
+    stage('restore') {
+      dir('app') {
+        sh "dotnet restore ../siebelnotes.sln"
+        //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+      }
+    }
+
+    stage('clean') {
+      dir('app') {
+        sh "dotnet clean"
+        //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+      }
+    }
+
+    stage('publish') {
+      dir('app') {
+        //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+      }
+    }  
+    
+    stage('create image') {
+      dir('app') {
+        //sh 'oc new-build --name=dotnetapp dotnet:2.2 --binary=true || true'
+        //sh 'oc start-build dotnetapp --from-dir=bin/Release/netcoreapp2.2/publish --follow'
+      }
     }
   }
 }
