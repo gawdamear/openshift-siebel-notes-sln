@@ -13,14 +13,14 @@ pipeline {
   stages {
     stage('Checkout') {
       steps {
-        git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+        //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }
 
     stage('Clean') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet clean ${solutionName}"
+          //sh "dotnet clean ${solutionName}"
         }
       }
     }
@@ -28,7 +28,7 @@ pipeline {
     stage('Restore') {
       steps {
         dir(checkoutFolder) {
-          sh "dotnet restore ${solutionName}"
+          //sh "dotnet restore ${solutionName}"
         }
       }
     }
@@ -38,7 +38,7 @@ pipeline {
           parallel (
               "Unit tests" : {
                   dir(checkoutFolder) {
-                    sh "dotnet test ${solutionName}"
+                    //sh "dotnet test ${solutionName}"
                   }
               },
               "Integration tests" : {
