@@ -35,9 +35,8 @@ pipeline {
 
     stage('Test') {
       steps {
-        sh "dotnet test"
         dir(checkoutFolder) {
-          sh "dotnet test ../UnitTests/UnitTests.csproj"
+          sh "dotnet test"
         }
       }
     }    
