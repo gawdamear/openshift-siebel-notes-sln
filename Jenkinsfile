@@ -48,7 +48,7 @@ pipeline {
                           pattern: '**/TestResults/*.xml',
                           skipNoTestFiles: true]
                       ]
-                  ]                  
+                  ])                  
                   //step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                   //tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
                   //pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
