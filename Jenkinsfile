@@ -9,13 +9,20 @@ pipeline {
   }    
 
   stages {
-
     stage('Clone') {
       steps {
         git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
       }
-    }
+    }    
   }
+
+  stage('Restore') {
+    steps {
+      dir('app') {
+        sh "dotnet restore ../siebelnotes.sln"
+      }
+    }
+  }  
 }
 
 /*
