@@ -20,7 +20,7 @@ node("dotnet-22") {
 
   stage('clean') {
     dir('app') {
-      sh "dotnet clean"
+      sh "dotnet clean ../siebelnotes.sln"
       //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
     }
   }
