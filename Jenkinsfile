@@ -34,7 +34,7 @@ pipeline {
     }
 
     stage('Test') {
-//        steps {
+      steps {
             parallel (
                 "Unit tests" : {
                     echo "unit testing..."
@@ -43,7 +43,7 @@ pipeline {
                     echo "integration testing..."
                 }
             )
- //       } 
+       } 
     }
   }  
 }
