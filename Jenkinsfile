@@ -34,16 +34,16 @@ pipeline {
     }
 
     stage('Test') {
-        steps {
+//        steps {
             parallel (
                 "Unit tests" : {
-                    //sh "dotnet test ${solutionName}"
+                    echo "unit testing..."
                 },
                 "Integration tests" : {
                     echo "integration testing..."
                 }
             )
-        } 
+ //       } 
     }
   }  
 }
