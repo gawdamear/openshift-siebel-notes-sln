@@ -1,5 +1,5 @@
 pipeline {
-  agent { label 'dotnetcore22' }
+  agent { label 'dotnet-22' }
 
   environment {
     GIT_REPO="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
@@ -9,7 +9,7 @@ pipeline {
   }    
 
   stages {
-    
+
     stage('Clone') {
       steps {
         git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
