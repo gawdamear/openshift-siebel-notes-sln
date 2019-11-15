@@ -40,8 +40,8 @@ pipeline {
       steps {
         parallel (
             "Unit tests" : {
-                script{
-                  runUnitTests()
+                steps{
+                  runUnitTests(checkoutFolder)
                 }
                 //dir(appFolder) {
                 //  echo "Unit tests..."
