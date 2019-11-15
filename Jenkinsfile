@@ -18,6 +18,13 @@ node("dotnet-22") {
     }
   }
 
+  stage('clean') {
+    dir('app') {
+      sh "dotnet clean"
+      //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+    }
+  }
+
   stage('publish') {
     dir('app') {
       //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
