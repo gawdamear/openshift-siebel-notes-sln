@@ -35,11 +35,20 @@ pipeline {
 
     stage('Test') {
       steps {
-        dir(checkoutFolder) {
-          sh "dotnet test ${solutionName}"
-        }
-      }
-    }    
+          parallel (
+              "Unit tests" : {
+                  dir(checkoutFolder) {
+                    sh "dotnet test ${solutionName}"
+                  }
+              },
+              "Integration tests" : {
+                  dir(checkoutFolder) {
+                    echo "integration testing..."
+                  }
+              }
+          )
+      } 
+    }
   }  
 }
 
