@@ -43,6 +43,10 @@ pipeline {
                 dir(checkoutFolder) {
                   echo "Unit tests..."
                   sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
+                  
+                  step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+                  tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
+                  pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
                 }
             },
             "Integration tests" : {
