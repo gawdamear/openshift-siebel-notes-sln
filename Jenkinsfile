@@ -47,9 +47,8 @@ pipeline {
                     thresholdMode: 1,
                     thresholds: [$class: 'FailedThreshold', unstableThreshold: '1'],
                     tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
-                    pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]]
+                    pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]]) 
                   )
-                  
                   //step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                   //tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
                   //pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
