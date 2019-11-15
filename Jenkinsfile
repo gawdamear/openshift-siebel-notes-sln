@@ -40,14 +40,15 @@ pipeline {
       steps {
         parallel (
             "Unit tests" : {
-                dir(checkoutFolder) {
-                  echo "Unit tests..."
-                  sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
+                runUnitTests()
+                //dir(appFolder) {
+                //  echo "Unit tests..."
+                //  sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
 
-                  step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
-                  tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
-                  pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
-                }
+                //  step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+                //  tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
+                //  pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
+                //}
             },
             "Integration tests" : {
                 dir(checkoutFolder) {
@@ -59,6 +60,20 @@ pipeline {
     }    
   }  
 }
+
+def runUnitTests(def checkoutFolder) {  
+    dir (checkoutFolder) {
+        try {
+            sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
+        }
+        finally {
+            step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+            tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
+            pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]]) 
+        }
+    }
+}
+
 
 /* WORKING
 node("dotnet-22") {
