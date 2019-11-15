@@ -1,14 +1,29 @@
 node("dotnet-22") {
+
+  environment {
+    GIT_REPO="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
+    GIT_USER="dotnettest-github"
+    GIT_BRANCH="master"
+  }  
+
   stage('clone sources') {
-    git credentialsId: "dotnettest-github", url: "https://github.com/gawdamear/openshift-siebel-notes-sln.git"
+    git credentialsId: "${GIT_USER}", branch: "${GIT_BRANCH}", url: "${GIT_REPO}"
     //sh "git clone https://github.com/redhat-developer/s2i-dotnetcore-ex --branch dotnetcore-2.2 ."
   }
-  stage('publish') {
+
+  stage('restore') {
     dir('app') {
       sh "dotnet restore ../siebelnotes.sln"
       //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
     }
   }
+
+  stage('publish') {
+    dir('app') {
+      //sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+    }
+  }  
+  
   stage('create image') {
     dir('app') {
       //sh 'oc new-build --name=dotnetapp dotnet:2.2 --binary=true || true'
