@@ -42,9 +42,15 @@ pipeline {
             "Unit tests" : {
                 dir(checkoutFolder) {
                   sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
-                  step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
-                  tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
-                  pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
+                  xunit (
+                    testTimeMargin: '3000',
+                    thresholdMode: 1,
+                    thresholds: [$class: 'FailedThreshold', unstableThreshold: '1'],
+                    tools: [$class: 'XUnitBuilder', pattern: '**/TestResults/*.xml']
+                  )
+                  //step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+                  //tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
+                  //pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
                 }
             },
             "Integration tests" : {
@@ -54,7 +60,9 @@ pipeline {
             }
         )
       } 
-    }    
+    } 
+
+
   }  
 }
 
