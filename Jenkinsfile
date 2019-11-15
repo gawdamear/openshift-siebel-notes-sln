@@ -11,7 +11,7 @@ pipeline {
   stages {
     stage('Checkout code') {
       steps {
-        echo "checkoutFolder"
+        echo checkoutFolder
         //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }    
