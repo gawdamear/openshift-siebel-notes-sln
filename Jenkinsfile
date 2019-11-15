@@ -5,19 +5,20 @@ pipeline {
     gitRepo ="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
     gitUser ="dotnettest-github"
     gitBranch ="master"
+    checkoutFolder = "/tmp/workspace/${env.JOB_NAME}/app"
   }    
 
   stages {
     stage('Checkout code') {
       steps {
-        echo "${env.JOB_NAME}"
+        echo "checkoutFolder"
         //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }
     }    
 
     stage('Restore') {
       steps {
-        dir('app') {
+        dir(checkoutFolder) {
           //sh "dotnet restore ../siebelnotes.sln"
         }
       }
