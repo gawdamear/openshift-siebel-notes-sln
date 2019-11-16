@@ -1,11 +1,38 @@
+node('dotnet-22'){
+
+  def gitUser = 'dotnettest-github'
+  def gitBranch = 'master'
+  def gitRepo = 'https://github.com/gawdamear/openshift-siebel-notes-sln.git'
+
+  def checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
+  def solutionName = "siebelnotes.sln"
+
+  stage('Checkout') {
+    steps {
+      echo "Checkout..."
+      git credentialsId: gitUser, branch: gitBranch, url: gitRepo
+    }
+  }   
+
+  stage('Clean') {
+    steps {
+      echo "Clean..."
+      sh "dotnet clean"
+    }
+  }  
+}
+
+
+/* WORKING
 pipeline {
   agent { label 'dotnet-22' }
 
   environment {
+    // gitlab 
     gitRepo ="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
     gitUser ="dotnettest-github"
     gitBranch ="master"
-
+    // application 
     checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
     solutionName = "siebelnotes.sln"
   }    
@@ -56,10 +83,25 @@ pipeline {
       } 
     } 
 
+    stage('Publish Binaries') {
+      steps {
+        dir(checkoutFolder) {
+          echo "Publish..."
+          sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+        }
+      }
+    }
 
+    stage('Create image') {
+      steps {
+        dir(checkoutFolder) {
+          echo "Create image..."
+        }
+      }
+    }
   }  
 }
-
+*/
 
 
 
