@@ -7,31 +7,43 @@ node('dotnet-22'){
   def checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
   def solutionName = "siebelnotes.sln"
 
-  stages {    
-    stage('Checkout') {
-      echo "Checkout..."
-      git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
-    }   
 
-    stage('Clean') {
-      echo "Clean..."
-      dir(checkoutFolder) {
-        sh "dotnet clean ${solutionName}"
-      }
-    } 
+  stage('Checkout') {
+    echo "Checkout..."
+    git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+  }   
 
-    stage('Restore') {
-      echo "Restore..."
-      dir(checkoutFolder) {
-        sh "dotnet restore ${solutionName}"
-      }
-    } 
-  }
-  post {
-    always {
-      cleanWs()
+  stage('Clean') {
+    echo "Clean..."
+    dir(checkoutFolder) {
+      sh "dotnet clean ${solutionName}"
     }
-  }  
+  } 
+
+  stage('Restore') {
+    echo "Restore..."
+    dir(checkoutFolder) {
+      sh "dotnet restore ${solutionName}"
+    }
+  } 
+
+  stage('Test') {
+    parallel (
+        "Unit tests" : {
+            dir(checkoutFolder) {
+              sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
+              step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+                tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
+                pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
+            }
+        },
+        "Integration tests" : {
+            dir(checkoutFolder) {
+              echo "integration testing..."
+            }
+        }
+    )
+  } 
 }
 
 
