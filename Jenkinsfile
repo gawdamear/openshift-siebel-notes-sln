@@ -7,25 +7,31 @@ node('dotnet-22'){
   def checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
   def solutionName = "siebelnotes.sln"
 
-  stage('Checkout') {
-    echo "Checkout..."
-    git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
-  }   
+  stages {    
+    stage('Checkout') {
+      echo "Checkout..."
+      git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+    }   
 
-  stage('Clean') {
-    echo "Clean..."
-    dir(checkoutFolder) {
-      sh "dotnet clean ${solutionName}"
+    stage('Clean') {
+      echo "Clean..."
+      dir(checkoutFolder) {
+        sh "dotnet clean ${solutionName}"
+      }
+    } 
+
+    stage('Restore') {
+      echo "Restore..."
+      dir(checkoutFolder) {
+        sh "dotnet restore ${solutionName}"
+      }
+    } 
+  }
+  post {
+    always {
+      cleanWs()
     }
-  } 
-
-  stage('Restore') {
-    echo "Restore..."
-    dir(checkoutFolder) {
-      sh "dotnet restore ${solutionName}"
-    }
-  } 
-
+  }  
 }
 
 
