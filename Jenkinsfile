@@ -8,15 +8,13 @@ node('dotnet-22'){
   def solutionName = "siebelnotes.sln"
 
   stage('Checkout') {
-    steps {
-      echo "Checkout..."
-      git credentialsId: gitUser, branch: gitBranch, url: gitRepo
-    }
+    echo "Checkout..."
+    git credentialsId: gitUser, branch: gitBranch, url: gitRepo
   }   
 
   stage('Clean') {
-    steps {
-      echo "Clean..."
+    echo "Clean..."
+    dir(checkoutFolder) {
       sh "dotnet clean"
     }
   }  
