@@ -9,7 +9,7 @@ node('dotnet-22'){
 
   stage('Checkout') {
     echo "Checkout..."
-    git credentialsId: gitUser, branch: gitBranch, url: gitRepo
+    git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
   }   
 
   stage('Clean') {
@@ -17,7 +17,15 @@ node('dotnet-22'){
     dir(checkoutFolder) {
       sh "dotnet clean ${solutionName}"
     }
-  }  
+  } 
+
+  stage('Restore') {
+    echo "Restore..."
+    dir(checkoutFolder) {
+      sh "dotnet restore ${solutionName}"
+    }
+  } 
+
 }
 
 
