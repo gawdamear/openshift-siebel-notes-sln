@@ -15,7 +15,7 @@ node('dotnet-22'){
   stage('Clean') {
     echo "Clean..."
     dir(checkoutFolder) {
-      sh "dotnet clean"
+      sh "dotnet clean ${solutionName}"
     }
   }  
 }
