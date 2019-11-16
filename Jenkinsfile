@@ -32,9 +32,11 @@ node('dotnet-22'){
         "Unit tests" : {
             dir(checkoutFolder) {
               sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
-              step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+              script {
+                step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                 tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
-                pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])     
+                pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
+              }  
             }
         },
         "Integration tests" : {
