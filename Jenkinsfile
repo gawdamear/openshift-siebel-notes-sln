@@ -8,6 +8,7 @@ node('dotnet-22'){
       def checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
       def solutionName = "siebelnotes.sln"
 
+      /*
       stage('Checkout') {
         echo "Checkout..."
         git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
@@ -26,7 +27,7 @@ node('dotnet-22'){
           sh "dotnet restore ${solutionName}"
         }
       } 
-
+      */
       stage('Test') {
         parallel (
             "Unit tests" : {
