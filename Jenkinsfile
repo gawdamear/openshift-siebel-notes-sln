@@ -70,8 +70,8 @@ pipeline {
           echo "Create image..."
         }
       }
-    }
-  }  */
+    }*/
+  }  
 }
 
 
