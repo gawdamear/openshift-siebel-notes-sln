@@ -32,7 +32,7 @@ node('dotnet-22'){
         parallel (
             "Unit tests" : {
                 dir(checkoutFolder) {
-                  "dotnet test --test-adapter-path:. --logger:xunit"
+                  "dotnet test" //--test-adapter-path:. --logger:xunit"
                   script {
                     //step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                     //tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
