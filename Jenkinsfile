@@ -31,13 +31,16 @@ node('dotnet-22'){
       stage('Test') {
         parallel (
             "Unit tests" : {
-                dir('app') {
+                dir(checkoutFolder) {
                   sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
-                  script {
+                  publishHTML([allowMissing: false, alwaysLinkToLastBuild: false, keepAll: false, 
+                  reportDir: '/TestResults/*.xml', reportFiles: 'TestResults.xml', 
+                  reportName: 'HTML Report', reportTitles: 'TestResults.xml'])
+                  /*script {
                     step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                     tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
                     pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
-                  }  
+                  }*/  
                 }
             },
             "Integration tests" : {
