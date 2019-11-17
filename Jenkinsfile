@@ -1,4 +1,4 @@
-/*node('dotnet-22'){
+node('dotnet-22'){
 
    try {    
       def gitUser = 'dotnettest-github'
@@ -32,11 +32,11 @@
         parallel (
             "Unit tests" : {
                 dir(checkoutFolder) {
-                  sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
+                  //sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
                   script {
-                    step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
-                    tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
-                    pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
+                    //step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+                    //tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
+                    //pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
                   } 
                 }
             },
@@ -52,8 +52,8 @@
       echo 'cleanup'
     }     
 }
-*/
 
+/*
 pipeline {
   agent { label 'dotnet-22' }
 
@@ -129,7 +129,7 @@ pipeline {
     }
   }  
 }
-
+*/
 
 
 
