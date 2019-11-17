@@ -31,7 +31,7 @@ node('dotnet-22'){
       stage('Test') {
         parallel (
             "Unit tests" : {
-                dir(checkoutFolder) {
+                dir('app') {
                   sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
                   script {
                     step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
