@@ -17,7 +17,7 @@ pipeline {
       }
     }    
 
-    stage('Clean') {
+/*    stage('Clean') {
       steps {
         dir(checkoutFolder) {
           echo "Clean..."
@@ -71,7 +71,7 @@ pipeline {
         }
       }
     }
-  }  
+  }  */
 }
 
 
