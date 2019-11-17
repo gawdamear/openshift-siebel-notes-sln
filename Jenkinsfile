@@ -58,11 +58,9 @@ pipeline {
   agent { label 'dotnet-22' }
 
   environment {
-    // gitlab 
     gitRepo ="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
     gitUser ="dotnettest-github"
     gitBranch ="master"
-    // application 
     checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
     solutionName = "siebelnotes.sln"
   }    
