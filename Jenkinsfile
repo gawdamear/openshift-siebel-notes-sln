@@ -34,15 +34,9 @@ node('dotnet-22'){
             "Unit tests" : {
                 dir(checkoutFolder) {
                   "dotnet test --logger:xunit"
-                  script {
-                    step([$class: 'XUnitBuilder',
-                        thresholds: [[$class: 'FailedThreshold', failureThreshold: '4']],
-                        tools: [[$class: 'JUnitType', pattern: 'TestResults/**']]])  
-                                          
-                    //step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
-                    //tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
-                    //pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
-                  } 
+                  step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
+                  tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
+                  pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
                 }
             },
             "Integration tests" : {
