@@ -1,6 +1,7 @@
 node('dotnet-22'){
 
-   try {    
+   try { 
+
       def gitUser = 'dotnettest-github'
       def gitBranch = 'master'
       def gitRepo = 'https://github.com/gawdamear/openshift-siebel-notes-sln.git'
@@ -32,7 +33,7 @@ node('dotnet-22'){
         parallel (
             "Unit tests" : {
                 dir(checkoutFolder) {
-                  "dotnet test --test-adapter-path:. --logger:xunit"
+                  "dotnet test --logger:xunit"
                   script {
                     step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                     tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
