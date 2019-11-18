@@ -46,10 +46,12 @@ node('dotnet-22'){
 
       stage('Publish') {
         dir(workingFolder) {
-          echo "workingFolder - " + workingFolder
-          sh "dotnet publish /api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+          sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
         }
-      }       
+      }  
+
+
+
     }
     finally {
       echo 'cleanup'
