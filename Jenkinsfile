@@ -61,6 +61,7 @@ node('dotnet-22'){
         dir(workingFolder) {
           input 'Deploy to test?'
           sh "oc new-app notesapi"
+          sh "oc expose svc/notesapi"
         }
       }              
     }
