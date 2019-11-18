@@ -2,7 +2,7 @@ node('dotnet-22'){
 
    try { 
 
-      def gitUser = 'dotnettest-github'
+      def gitUser = 'dotnet-dotnettest-github'
       def gitBranch = 'master'
       def gitRepo = 'https://github.com/gawdamear/openshift-siebel-notes-sln.git'
 
