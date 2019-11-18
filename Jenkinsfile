@@ -6,25 +6,22 @@ node('dotnet-22'){
       def gitBranch = 'master'
       def gitRepo = 'https://github.com/gawdamear/openshift-siebel-notes-sln.git'
 
-      def checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
+      def workingFolder = "/tmp/workspace/${env.JOB_NAME}"
       def solutionName = "siebelnotes.sln"
 
       
       stage('Checkout') {
-        echo "Checkout..."
         git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }   
 
       stage('Clean') {
-        echo "Clean..."
-        dir(checkoutFolder) {
+        dir(workingFolder) {
           sh "dotnet clean ${solutionName}"
         }
       } 
 
       stage('Restore') {
-        echo "Restore..."
-        dir(checkoutFolder) {
+        dir(workingFolder) {
           sh "dotnet restore ${solutionName}"
         }
       } 
@@ -32,7 +29,7 @@ node('dotnet-22'){
       stage('Test') {
         parallel (
             "Unit tests" : {
-                dir(checkoutFolder) {
+                dir(workingFolder) {
                   "dotnet test --logger:xunit"
                   step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                   tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
@@ -40,12 +37,18 @@ node('dotnet-22'){
                 }
             },
             "Integration tests" : {
-                dir(checkoutFolder) {
+                dir(workingFolder) {
                   echo "integration testing..."
                 }
             }
         )
       }
+
+      stage('Publish') {
+        dir(workingFolder) {
+          sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+        }
+      }       
     }
     finally {
       echo 'cleanup'
@@ -61,7 +64,7 @@ node('dotnet-22'){
     gitRepo ="https://github.com/gawdamear/openshift-siebel-notes-sln.git"
     gitUser ="dotnettest-github"
     gitBranch ="master"
-    checkoutFolder = "/tmp/workspace/${env.JOB_NAME}"
+    workingFolder = "/tmp/workspace/${env.JOB_NAME}"
     solutionName = "siebelnotes.sln"
   }    
 
@@ -75,7 +78,7 @@ node('dotnet-22'){
 
 /*    stage('Clean') {
       steps {
-        dir(checkoutFolder) {
+        dir(workingFolder) {
           echo "Clean..."
           sh "dotnet clean ${solutionName}"
         }
@@ -84,7 +87,7 @@ node('dotnet-22'){
 
     stage('Restore') {
       steps {
-        dir(checkoutFolder) {
+        dir(workingFolder) {
           echo "Restore..."
           sh "dotnet restore ${solutionName}"
         }
@@ -95,7 +98,7 @@ node('dotnet-22'){
       steps {
         parallel (
             "Unit tests" : {
-                dir(checkoutFolder) {
+                dir(workingFolder) {
                   sh "dotnet test ${solutionName} --test-adapter-path:. --logger:xunit"
                   step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                     tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
@@ -103,7 +106,7 @@ node('dotnet-22'){
                 }
             },
             "Integration tests" : {
-                dir(checkoutFolder) {
+                dir(workingFolder) {
                   echo "integration testing..."
                 }
             }
@@ -113,7 +116,7 @@ node('dotnet-22'){
 
     stage('Publish Binaries') {
       steps {
-        dir(checkoutFolder) {
+        dir(workingFolder) {
           echo "Publish..."
           sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
         }
@@ -122,7 +125,7 @@ node('dotnet-22'){
 
     stage('Create image') {
       steps {
-        dir(checkoutFolder) {
+        dir(workingFolder) {
           echo "Create image..."
         }
       }
