@@ -46,7 +46,7 @@ node('dotnet-22'){
 
       stage('Publish') {
         dir(workingFolder) {
-          sh "dotnet publish -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+          sh "dotnet publish api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
         }
       }  
 

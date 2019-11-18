@@ -8,7 +8,6 @@ C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\bin\Deb
 C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\bin\Debug\netcoreapp2.2\UnitTests.runtimeconfig.dev.json
 C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\bin\Debug\netcoreapp2.2\UnitTests.dll
 C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\bin\Debug\netcoreapp2.2\UnitTests.pdb
-C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\obj\Debug\netcoreapp2.2\UnitTests.csprojAssemblyReference.cache
 C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\obj\Debug\netcoreapp2.2\UnitTests.csproj.CoreCompileInputs.cache
 C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\obj\Debug\netcoreapp2.2\UnitTests.AssemblyInfoInputs.cache
 C:\Users\701295361\Documents\Builds\openshift-siebel-notes-sln\UnitTests\obj\Debug\netcoreapp2.2\UnitTests.AssemblyInfo.cs
