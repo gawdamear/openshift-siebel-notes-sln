@@ -48,8 +48,8 @@ node('dotnet-22'){
         dir(workingFolder) {
           sh "dotnet publish api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
           sh "oc new-build --allow-missing-imagestream-tags=true --binary=true --name=notesapi dotnet:2.2"
-          sh "oc start-build notesapi --from-dir=api/bin/Release/netcoreapp2.2/publish"
-          sh "oc new-app notesapi"
+          //sh "oc start-build notesapi --from-dir=api/bin/Release/netcoreapp2.2/publish"
+          //sh "oc new-app notesapi"
         }
       }  
     }
