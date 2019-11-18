@@ -54,12 +54,17 @@ node('dotnet-22'){
         }
       }  
 
-      stage('Build Image') {
+      stage('Star Build') {
         dir(workingFolder) {
           sh "oc start-build notesapi --from-dir=api/bin/Release/netcoreapp2.2/publish"
-          //sh "oc new-app notesapi"
         }
-      }        
+      }   
+
+      stage('Create Application') {
+        dir(workingFolder) {
+          sh "oc new-app notesapi"
+        }
+      }              
     }
     finally {
       echo 'cleanup'
