@@ -50,8 +50,11 @@ node('dotnet-22'){
         }
       }  
 
-
-
+      stage('Build Image') {
+        dir(workingFolder) {
+          sh "oc start-build siebelnotes --from-dir=bin/Release/netcoreapp2.2/publish"
+        }
+      }  
     }
     finally {
       echo 'cleanup'
