@@ -47,7 +47,7 @@ node('dotnet-22'){
       stage('Build Image') {
         dir(workingFolder) {
           sh "dotnet publish api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
-          sh "oc new-build --name=notesapi dotnet:2.2 --binary=true"
+          sh "oc new-build --name=notesapi dotnet:2.2 --allow-missing-imagestream-tags --binary=true"
           sh "oc start-build notesapi --from-dir=api/bin/Release/netcoreapp2.2/publish"
           sh "oc new-app notesapi"
         }
