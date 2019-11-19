@@ -16,7 +16,7 @@ node('dotnet-22'){
 
       def dotNetVersion = 'dotnet'
       
-      //openshift.withCluster() {
+      openshift.withCluster() {
           stage('Checkout Source') {
             git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
           }   
@@ -48,7 +48,7 @@ node('dotnet-22'){
             publishArtifact(workingFolder, appStartUpProjectFolder)
             binaryBuild(workingFolder, openshiftImageName, dotNetVersion, publishArtifactFolder)
           }  
-      //}
+      }
     }
     finally {
       echo 'cleanup'
