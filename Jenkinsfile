@@ -40,11 +40,9 @@ node('dotnet-22'){
             )
           }
           
-          openshift.withProject(openshiftProjectName) {
-              stage('Build Image') {
-                publishArtifact(workingFolder, appStartUpProjectFolder)
-                binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
-              }  
+          stage('Build Image') {
+             publishArtifact(workingFolder, appStartUpProjectFolder)
+             binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
           }
       }
     }
