@@ -12,39 +12,43 @@ node('dotnet-22'){
       def appStartUpProjectFolder = "api/$appStartUpProject"
       
       def openshiftImageName = 'siebel-notes-api'
-      def dotNetVersion = 'dotnet:2.2'
+      def openshiftBaseProjectName = ''
 
-      stage('Checkout Source') {
-        git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
-      }   
-
-      stage('Restore') {
-        restore(workingFolder)
-      } 
-
-      stage('Clean') {
-        clean(workingFolder)
-      } 
-
-      stage('Build Source') {
-        build(workingFolder)
-      }    
-
-      stage('Testing') {
-        parallel (
-            "Unit tests" : {
-                unitTest(workingFolder)
-            },
-            "Integration tests" : {
-                integrationTest(workingFolder) 
-            }
-        )
-      }
+      def dotNetVersion = 'dotnet'
       
-      stage('Build Image') {
-        publishArtifact(workingFolder, appStartUpProjectFolder)
-        binaryBuild(workingFolder, openshiftImageName, dotNetVersion, publishArtifactFolder)
-      }  
+      //openshift.withCluster() {
+          stage('Checkout Source') {
+            git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+          }   
+
+          stage('Restore') {
+            restore(workingFolder)
+          } 
+
+          stage('Clean') {
+            clean(workingFolder)
+          } 
+
+          stage('Build Source') {
+            build(workingFolder)
+          }    
+
+          stage('Testing') {
+            parallel (
+                "Unit tests" : {
+                    unitTest(workingFolder)
+                },
+                "Integration tests" : {
+                    integrationTest(workingFolder) 
+                }
+            )
+          }
+          
+          stage('Build Image') {
+            publishArtifact(workingFolder, appStartUpProjectFolder)
+            binaryBuild(workingFolder, openshiftImageName, dotNetVersion, publishArtifactFolder)
+          }  
+      //}
     }
     finally {
       echo 'cleanup'
