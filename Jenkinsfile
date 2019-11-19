@@ -57,7 +57,7 @@ def restore(def workingFolder) {
 
 def clean(def workingFolder) {
     dir (workingFolder) {
-      sh "dotnet clean"      
+      sh "dotnet clean --configuration Release"      
     }
 }
 
