@@ -96,7 +96,7 @@ def publishArtifact(def workingFolder, def appStartUpProjectFolder) {
     }
 }
 
-def binaryBuild(def workingFolder, def openshiftImageName, def dotNetVersion, def publishArtifactFolder) {
+def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVersion, def publishArtifactFolder) {
     dir(workingFolder) {
       sh "oc new-build --name=$openshiftImageName $buildWithdotNetVersion --binary=true"
       sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
