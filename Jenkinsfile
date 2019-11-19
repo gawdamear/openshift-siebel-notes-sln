@@ -18,7 +18,11 @@ node('dotnet-22'){
         restore(workingFolder)
       } 
 
-      
+      stage('Clean') {
+        clean(workingFolder)
+      }       
+
+
       /*
       stage('Test') {
         parallel (
@@ -70,7 +74,11 @@ def restore(def workingFolder) {
     }
 }
 
-
+def clean(def workingFolder) {
+    dir (workingFolder) {
+      sh "dotnet clean"      
+    }
+}
 
 /*pipeline {
   agent { label 'dotnet-22' }
