@@ -97,4 +97,5 @@ def integrationTest(def workingFolder) {
 def publish(def workingFolder) {
     dir(workingFolder) {
       sh "dotnet publish api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+    }
 }
