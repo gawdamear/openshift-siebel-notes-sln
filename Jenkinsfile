@@ -50,7 +50,7 @@ node('dotnet-22'){
       }
     }
     finally {
-      cleanWs()
+      cleanUpWorkSpace()
       echo 'cleanup'
     }     
 }
@@ -104,6 +104,8 @@ def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVe
       sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
     }
 }
-
+def cleanUpWorkSpace(){
+    cleanWs() 
+}
 
 
