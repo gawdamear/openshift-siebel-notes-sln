@@ -48,7 +48,7 @@ node('dotnet-22'){
       }
     }
     finally {
-      cleanUpWorkSpace()
+      step([$class: 'WsCleanup'])
       echo 'cleanup'
     }     
 }
