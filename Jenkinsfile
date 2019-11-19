@@ -2,9 +2,9 @@ node('dotnet-22'){
 
    try { 
 
-      def gitUser = 'dotnet-dotnettest-github'
-      def gitBranch = 'master'
-      def gitRepo = 'https://github.com/gawdamear/openshift-siebel-notes-sln.git'
+      //def gitUser = 'dotnet-dotnettest-github'
+      //def gitBranch = 'master'
+      //def gitRepo = 'https://github.com/gawdamear/openshift-siebel-notes-sln.git'
 
       def workingFolder = "/tmp/workspace/${env.JOB_NAME}"
       def publishArtifactFolder = "api/bin/Release/netcoreapp2.2/publish"
@@ -18,7 +18,8 @@ node('dotnet-22'){
       
       openshift.withCluster() {
           stage('Checkout Source') {
-            git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+            //git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
+            checkout scm
           }   
 
           stage('Restore') {
