@@ -16,7 +16,7 @@ node('dotnet-22'){
             checkout()
           }   
 
-          stage('Restore') {
+          stage('Restore Packages') {
             restore(workingFolder)
           } 
 
@@ -99,6 +99,7 @@ def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVe
       sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
     }
 }
+
 def cleanUpWorkSpace(){
     cleanWs() 
 }
