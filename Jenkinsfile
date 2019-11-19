@@ -14,7 +14,7 @@ node('dotnet-22'){
       
       openshift.withCluster() {
           stage('Checkout Source') {
-            checkout scm
+            checkout()
           }   
 
           stage('Restore') {
@@ -47,8 +47,13 @@ node('dotnet-22'){
       }
     }
     finally {
+      cleanWorkSpace()
       echo 'cleanup'
     }     
+}
+
+def checkout (){
+  checkout scm
 }
 
 def restore(def workingFolder) {
@@ -95,6 +100,10 @@ def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVe
       sh "oc new-build --name=$openshiftImageName $buildWithdotNetVersion --binary=true"
       sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
     }
+}
+
+def cleanWorkSpace(){
+    step([$class: 'WsCleanup'])
 }
 
 
