@@ -14,18 +14,12 @@ node('dotnet-22'){
         git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }   
 
-      stage('Clean') {
-        dir(workingFolder) {
-          sh "dotnet clean ${solutionName}"
-        }
+      stage('Restore') {
+        restore(workingFolder)
       } 
 
-      stage('Restore') {
-        dir(workingFolder) {
-          sh "dotnet restore ${solutionName}"
-        }
-      } 
       
+      /*
       stage('Test') {
         parallel (
             "Unit tests" : {
@@ -33,7 +27,7 @@ node('dotnet-22'){
                   "dotnet test --logger:xunit"
                   step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
                   tools: [xUnitDotNet(deleteOutputFiles: true, failIfNotNew: false, 
-                  pattern: '**/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
+                  pattern: '--/TestResults/*.xml', skipNoTestFiles: false, stopProcessingIfError: true)]])   
                 }
             },
             "Integration tests" : {
@@ -64,10 +58,16 @@ node('dotnet-22'){
           sh "oc expose svc/notesapi"
         }
       }              
-    }
+    }*/
     finally {
       echo 'cleanup'
     }     
+}
+
+def restore(def workingFolder) {
+    dir (workingFolder) {
+      sh "dotnet restore"      
+    }
 }
 
 
