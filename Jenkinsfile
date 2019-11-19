@@ -14,6 +14,7 @@ node('dotnet-22'){
       
       openshift.withCluster() {
           stage('Checkout Source') {
+            cleanupWs()
             checkout()
           }   
 
@@ -50,7 +51,7 @@ node('dotnet-22'){
       }
     }
     finally {
-      cleanUpWorkSpace()
+      cleanWs()
       echo 'cleanup'
     }     
 }
@@ -105,8 +106,5 @@ def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVe
     }
 }
 
-def cleanUpWorkSpace(){
-    sh "git clean -x -f"
-}
 
 
