@@ -41,7 +41,7 @@ node('dotnet-22'){
       
       stage('Build Image') {
         publishArtifact(workingFolder)
-        binaryBuild(workingFolder, openshiftImageName, dotNetVersion)
+        binaryBuild(workingFolder, openshiftImageName, dotNetVersion, publishArtifactFolder)
       }  
     }
     finally {
@@ -88,7 +88,7 @@ def publishArtifact(def workingFolder) {
     }
 }
 
-def binaryBuild(def workingFolder, def openshiftImageName, def dotNetVersion) {
+def binaryBuild(def workingFolder, def openshiftImageName, def dotNetVersion, def publishArtifactFolder) {
     dir(workingFolder) {
       sh "oc new-build --name=$openshiftImageName $dotNetVersion --binary=true"
       sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
