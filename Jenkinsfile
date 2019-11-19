@@ -63,8 +63,8 @@ node('dotnet-22'){
           sh "oc new-app notesapi"
           sh "oc expose svc/notesapi"
         }
-      }              
-    }*/
+      } */             
+    }
     finally {
       echo 'cleanup'
     }     
