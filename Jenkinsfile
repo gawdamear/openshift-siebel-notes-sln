@@ -1,6 +1,4 @@
-//node('dotnet-22'){
-node {
-
+node('dotnet-22'){
    try { 
 
       def workingFolder = "/tmp/workspace/${env.JOB_NAME}"
@@ -20,12 +18,10 @@ node {
           }   
 
           stage('Restore') {
-            node('dotnet-22')
             restore(workingFolder)
           } 
 
           stage('Clean') {
-            node('dotnet-22')
             clean(workingFolder)
           } 
 
