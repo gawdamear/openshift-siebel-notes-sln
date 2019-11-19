@@ -26,13 +26,15 @@ node('dotnet-22'){
           } 
 
           stage('Build Source') {
-            build(workingFolder)
+            echo "Build Source..."
+            //build(workingFolder)
           }    
 
           stage('Testing') {
             parallel (
                 "Unit tests" : {
-                    unitTest(workingFolder)
+                    echo "Unit tests..."
+                    //unitTest(workingFolder)
                 },
                 "Integration tests" : {
                     integrationTest(workingFolder) 
@@ -48,7 +50,7 @@ node('dotnet-22'){
       }
     }
     finally {
-      cleanUpWorkSpace(workingFolder)
+      cleanUpWorkSpace()
       echo 'cleanup'
     }     
 }
@@ -103,10 +105,8 @@ def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVe
     }
 }
 
-def cleanUpWorkSpace(def workingFolder){
-    dir(workingFolder) {
-        deleteDir()
-    }
+def cleanUpWorkSpace(){
+    sh "git clean -x -f"
 }
 
 
