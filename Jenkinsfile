@@ -43,7 +43,7 @@ node('dotnet-22'){
       }
       
       stage('Build Image') {
-        publish(workingFolder)
+        publishArtifact(workingFolder)
         binaryBuild(workingFolder)
       }  
 
@@ -94,7 +94,7 @@ def integrationTest(def workingFolder) {
     }
 }
 
-def publish(def workingFolder) {
+def publishArtifact(def workingFolder) {
     dir(workingFolder) {
       sh "dotnet publish api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
     }
