@@ -9,7 +9,13 @@ node('dotnet-22'){
       def workingFolder = "/tmp/workspace/${env.JOB_NAME}"
       def solutionName = "siebelnotes.sln"
       
-      stage('Checkout') {
+      def openshiftImageName = 'siebel-notes-api'
+
+      def dotNetVersion = 'dotnet:2.2'
+
+
+
+      stage('Checkout Source') {
         git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
       }   
 
@@ -19,9 +25,9 @@ node('dotnet-22'){
 
       stage('Clean') {
         clean(workingFolder)
-      }       
+      } 
 
-      stage('Build') {
+      stage('Build Source') {
         build(workingFolder)
       }    
 
@@ -36,18 +42,12 @@ node('dotnet-22'){
         )
       }
       
-      stage('Publish') {
+      stage('Build Image') {
         publish(workingFolder)
+        binaryBuild(workingFolder)
       }  
 
       /*
-      stage('Start Build') {
-        dir(workingFolder) {
-          sh "oc new-build --name=notesapi dotnet:2.2 --binary=true"
-          sh "oc start-build notesapi --from-dir=api/bin/Release/netcoreapp2.2/publish"
-        }
-      }   
-
       stage('Deploy Application') {
         dir(workingFolder) {
           input 'Deploy to test?'
@@ -99,3 +99,12 @@ def publish(def workingFolder) {
       sh "dotnet publish api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
     }
 }
+
+def binaryBuild(def workingFolder) {
+    dir(workingFolder) {
+      sh "oc new-build --name=$openshiftImageName $dotNetVersion --binary=true"
+      sh "oc start-build $openshiftImageName --from-dir=api/bin/Release/netcoreapp2.2/publish"
+    }
+}
+
+
