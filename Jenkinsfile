@@ -8,7 +8,6 @@ node('dotnet-22'){
 
       def workingFolder = "/tmp/workspace/${env.JOB_NAME}"
       def solutionName = "siebelnotes.sln"
-
       
       stage('Checkout') {
         git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
@@ -22,6 +21,9 @@ node('dotnet-22'){
         clean(workingFolder)
       }       
 
+      stage('Build') {
+        build(workingFolder)
+      }    
 
       /*
       stage('Test') {
@@ -77,6 +79,12 @@ def restore(def workingFolder) {
 def clean(def workingFolder) {
     dir (workingFolder) {
       sh "dotnet clean"      
+    }
+}
+
+def build(def workingFolder) {
+    dir (workingFolder) {
+      sh "dotnet build --configuration Release"      
     }
 }
 
