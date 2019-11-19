@@ -13,7 +13,6 @@ node('dotnet-22'){
       
       openshift.withCluster() {
           stage('Checkout Source') {
-            cleanupWs()
             checkout()
           }   
 
@@ -26,15 +25,13 @@ node('dotnet-22'){
           } 
 
           stage('Build Source') {
-            echo "Build Source..."
-            //build(workingFolder)
+            build(workingFolder)
           }    
 
           stage('Testing') {
             parallel (
                 "Unit tests" : {
-                    echo "Unit tests..."
-                    //unitTest(workingFolder)
+                    unitTest(workingFolder)
                 },
                 "Integration tests" : {
                     integrationTest(workingFolder) 
@@ -43,15 +40,13 @@ node('dotnet-22'){
           }
           
           stage('Build Image') {
-              echo "Build image..."
-             //publishArtifact(workingFolder, appStartUpProjectFolder)
-             //binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
+             publishArtifact(workingFolder, appStartUpProjectFolder)
+             binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
           }
       }
     }
     finally {
       cleanUpWorkSpace()
-      echo 'cleanup'
     }     
 }
 
