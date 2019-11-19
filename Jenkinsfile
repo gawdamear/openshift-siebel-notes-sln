@@ -7,13 +7,10 @@ node('dotnet-22'){
       def gitRepo = 'https://github.com/gawdamear/openshift-siebel-notes-sln.git'
 
       def workingFolder = "/tmp/workspace/${env.JOB_NAME}"
-      def solutionName = "siebelnotes.sln"
+      def publishArtifactFolder = "api/bin/Release/netcoreapp2.2/publish"
       
       def openshiftImageName = 'siebel-notes-api'
-
       def dotNetVersion = 'dotnet:2.2'
-
-
 
       stage('Checkout Source') {
         git credentialsId: "${gitUser}", branch: "${gitBranch}", url: "${gitRepo}"
@@ -46,15 +43,6 @@ node('dotnet-22'){
         publishArtifact(workingFolder)
         binaryBuild(workingFolder, openshiftImageName, dotNetVersion)
       }  
-
-      /*
-      stage('Deploy Application') {
-        dir(workingFolder) {
-          input 'Deploy to test?'
-          sh "oc new-app notesapi"
-          sh "oc expose svc/notesapi"
-        }
-      } */             
     }
     finally {
       echo 'cleanup'
@@ -103,7 +91,7 @@ def publishArtifact(def workingFolder) {
 def binaryBuild(def workingFolder, def openshiftImageName, def dotNetVersion) {
     dir(workingFolder) {
       sh "oc new-build --name=$openshiftImageName $dotNetVersion --binary=true"
-      sh "oc start-build $openshiftImageName --from-dir=api/bin/Release/netcoreapp2.2/publish"
+      sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
     }
 }
 
