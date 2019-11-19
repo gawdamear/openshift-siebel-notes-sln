@@ -44,7 +44,7 @@ node('dotnet-22'){
       
       stage('Build Image') {
         publishArtifact(workingFolder)
-        binaryBuild(workingFolder)
+        binaryBuild(workingFolder, openshiftImageName, dotNetVersion)
       }  
 
       /*
@@ -100,10 +100,10 @@ def publishArtifact(def workingFolder) {
     }
 }
 
-def binaryBuild(def workingFolder) {
+def binaryBuild(def workingFolder, def openshiftImageName, def dotNetVersion) {
     dir(workingFolder) {
-      sh "oc new-build --name=${openshiftImageName} ${dotNetVersion} --binary=true"
-      sh "oc start-build ${openshiftImageName} --from-dir=api/bin/Release/netcoreapp2.2/publish"
+      sh "oc new-build --name=$openshiftImageName $dotNetVersion --binary=true"
+      sh "oc start-build $openshiftImageName --from-dir=api/bin/Release/netcoreapp2.2/publish"
     }
 }
 
