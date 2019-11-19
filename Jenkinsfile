@@ -12,9 +12,9 @@ node('dotnet-22'){
       def appStartUpProjectFolder = "api/$appStartUpProject"
       
       def openshiftImageName = 'siebel-notes-api'
-      def openshiftBaseProjectName = ''
+      def openshiftProjectName = 'dotnet'
 
-      def dotNetVersion = 'dotnet'
+      def buildWithdotNetVersion = 'dotnet:2.2'
       
       openshift.withCluster() {
           stage('Checkout Source') {
@@ -44,10 +44,12 @@ node('dotnet-22'){
             )
           }
           
-          stage('Build Image') {
-            publishArtifact(workingFolder, appStartUpProjectFolder)
-            binaryBuild(workingFolder, openshiftImageName, dotNetVersion, publishArtifactFolder)
-          }  
+          openshift.withProject(openshiftProjectName) {
+              stage('Build Image') {
+                publishArtifact(workingFolder, appStartUpProjectFolder)
+                binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
+              }  
+          }
       }
     }
     finally {
@@ -96,7 +98,7 @@ def publishArtifact(def workingFolder, def appStartUpProjectFolder) {
 
 def binaryBuild(def workingFolder, def openshiftImageName, def dotNetVersion, def publishArtifactFolder) {
     dir(workingFolder) {
-      sh "oc new-build --name=$openshiftImageName $dotNetVersion --binary=true"
+      sh "oc new-build --name=$openshiftImageName $buildWithdotNetVersion --binary=true"
       sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
     }
 }
