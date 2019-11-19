@@ -48,7 +48,7 @@ node('dotnet-22'){
       }
     }
     finally {
-      step([$class: 'WsCleanup'])
+      cleanUpWorkSpace(workingFolder)
       echo 'cleanup'
     }     
 }
@@ -103,8 +103,10 @@ def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVe
     }
 }
 
-def cleanUpWorkSpace(){
-    step([$class: 'WsCleanup'])
+def cleanUpWorkSpace(def workingFolder){
+    dir(workingFolder) {
+        deleteDir()
+    }
 }
 
 
