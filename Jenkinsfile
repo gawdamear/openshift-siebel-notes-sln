@@ -1,4 +1,5 @@
-node('dotnet-22'){
+//node('dotnet-22'){
+node {
 
    try { 
 
@@ -19,10 +20,12 @@ node('dotnet-22'){
           }   
 
           stage('Restore') {
+            node('dotnet-22')
             restore(workingFolder)
           } 
 
           stage('Clean') {
+            node('dotnet-22')
             clean(workingFolder)
           } 
 
