@@ -102,8 +102,8 @@ def publishArtifact(def workingFolder) {
 
 def binaryBuild(def workingFolder) {
     dir(workingFolder) {
-      sh "oc new-build --name=$openshiftImageName $dotNetVersion --binary=true"
-      sh "oc start-build $openshiftImageName --from-dir=api/bin/Release/netcoreapp2.2/publish"
+      sh "oc new-build --name=${openshiftImageName} ${dotNetVersion} --binary=true"
+      sh "oc start-build ${openshiftImageName} --from-dir=api/bin/Release/netcoreapp2.2/publish"
     }
 }
 
