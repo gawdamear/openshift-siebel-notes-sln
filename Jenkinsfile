@@ -41,8 +41,9 @@ node('dotnet-22'){
           }
           
           stage('Build Image') {
-             publishArtifact(workingFolder, appStartUpProjectFolder)
-             binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
+              echo "Build image..."
+             //publishArtifact(workingFolder, appStartUpProjectFolder)
+             //binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
           }
       }
     }
