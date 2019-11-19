@@ -8,6 +8,8 @@ node('dotnet-22'){
 
       def workingFolder = "/tmp/workspace/${env.JOB_NAME}"
       def publishArtifactFolder = "api/bin/Release/netcoreapp2.2/publish"
+      def appStartUpProject = "api.csproj"
+      def appStartUpProjectFolder = "api/$appStartUpProject"
       
       def openshiftImageName = 'siebel-notes-api'
       def dotNetVersion = 'dotnet:2.2'
@@ -40,7 +42,7 @@ node('dotnet-22'){
       }
       
       stage('Build Image') {
-        publishArtifact(workingFolder)
+        publishArtifact(workingFolder, appStartUpProjectFolder)
         binaryBuild(workingFolder, openshiftImageName, dotNetVersion, publishArtifactFolder)
       }  
     }
@@ -82,9 +84,9 @@ def integrationTest(def workingFolder) {
     }
 }
 
-def publishArtifact(def workingFolder) {
+def publishArtifact(def workingFolder, def appStartUpProjectFolder) {
     dir(workingFolder) {
-      sh "dotnet publish api/api.csproj -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
+      sh "dotnet publish $appStartUpProjectFolder -c Release /p:MicrosoftNETPlatformLibrary=Microsoft.NETCore.App"
     }
 }
 
