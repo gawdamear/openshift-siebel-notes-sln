@@ -12,10 +12,10 @@ node('dotnet-22'){
       def buildWithdotNetVersion = 'dotnet:2.2'
 
       stage('testing'){
+        script {
           // Checkout the repository and save the resulting metadata
           def scmVars = checkout([
-            $class: 'GitSCM',
-            ...
+            $class: 'GitSCM'
           ])
 
           // Display the variable using scmVars
@@ -26,7 +26,8 @@ node('dotnet-22'){
           env.GIT_COMMIT = scmVars.GIT_COMMIT
           echo "env.GIT_COMMIT"
           echo "${env.GIT_COMMIT}"
-          echo 'hello'
+        }        
+        echo 'hello'
       }
 
       /*openshift.withCluster() {
