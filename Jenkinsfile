@@ -11,12 +11,11 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
-      def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
+      //def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
       
       stage('testing'){
         dir (workingFolder) {
-          sh "git init"
-          echo commitHash
+          echo 'ref: refs/heads/ML_#94_FILTER_TYPES_AND_SPECIAL_CHARS' > .git/HEAD
           echo 'hello'        
         }        
       }
