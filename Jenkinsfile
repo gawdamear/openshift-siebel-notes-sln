@@ -11,9 +11,10 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
+      def committerEmail = sh (script: 'git --no-pager show -s --format=\'%ae\'', returnStdout: true).trim()
+      
       stage('testing'){
-        git credentialsId: "dotnet-dotnettest-github", branch: "master", url: "https://github.com/gawdamear/openshift-siebel-notes-sln.git"
-        git log "-1 --pretty=%h"
+        echo committerEmail
         echo 'hello'
       }
 
