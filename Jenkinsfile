@@ -14,6 +14,7 @@ node('dotnet-22'){
       def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
       
       stage('testing'){
+        sh "git init"
         echo commitHash
         echo 'hello'
       }
