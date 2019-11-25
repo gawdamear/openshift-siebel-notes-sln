@@ -17,7 +17,7 @@ node('dotnet-22'){
         dir (workingFolder) {
           sh "git clone https://gawdamear:4xTe75RVg!@github.com/gawdamear/openshift-siebel-notes-sln.git"
           sh "git init"
-          sh "git log -1 --pretty=%h"
+          sh "git log -1"
           echo 'hello'        
         }        
       }
