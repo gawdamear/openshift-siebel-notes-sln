@@ -11,7 +11,7 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
-      def GITREMOTE = "git url ${env.GIT_URL}"
+      def GITREMOTE = currentBuild.rawBuild.getPreviousSuccessfulBuild()
       
       stage('testing'){
         echo GITREMOTE
