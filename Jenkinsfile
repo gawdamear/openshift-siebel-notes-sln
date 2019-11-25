@@ -11,13 +11,10 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
-      def getFolderName() {
-        def array = pwd().split("/")
-        return array[array.length - 2];
-      }
+      def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
       
       stage('testing'){
-        echo getFolderName
+        echo commitHash
         echo 'hello'
       }
 
