@@ -10,9 +10,11 @@ node('dotnet-22'){
       def openshiftProjectName = 'dotnet'
 
       def buildWithdotNetVersion = 'dotnet:2.2'
+
+      def GITREMOTE = 'git url ${env.GIT_URL}'
       
       stage('testing'){
-        echo ${env.GIT_URL}
+        echo GITREMOTE
         echo 'hello'
       }
 
