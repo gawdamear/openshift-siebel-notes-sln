@@ -12,7 +12,7 @@ node('dotnet-22'){
       def buildWithdotNetVersion = 'dotnet:2.2'
       
       stage('testing'){
-        echo GIT_URL %GIT_URL%
+        echo ${env.GIT_URL}
         echo 'hello'
       }
 
