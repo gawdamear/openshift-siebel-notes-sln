@@ -15,8 +15,7 @@ node('dotnet-22'){
       
       stage('testing'){
         dir (workingFolder) {
-          sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
-          sh "git fetch --no-tags"
+          sh "git clone https://github.com/gawdamear/openshift-siebel-notes-sln.git"
           echo 'hello'        
         }        
       }
