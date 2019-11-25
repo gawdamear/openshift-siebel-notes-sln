@@ -15,7 +15,8 @@ node('dotnet-22'){
       
       stage('testing'){
         dir (workingFolder) {
-          echo getLastSuccessfulCommit()
+          sh "git config --add remote.origin.fetch +refs/heads/master:refs/remotes/origin/master"
+          sh "git fetch --no-tags"
           echo 'hello'        
         }        
       }
