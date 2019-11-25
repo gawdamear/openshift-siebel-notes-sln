@@ -13,6 +13,7 @@ node('dotnet-22'){
 
       stage('testing'){
         git credentialsId: "dotnet-dotnettest-github", branch: "master", url: "https://github.com/gawdamear/openshift-siebel-notes-sln.git"
+        git log "-1 --pretty=%h"
         echo 'hello'
       }
 
