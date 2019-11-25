@@ -17,7 +17,7 @@ node('dotnet-22'){
       }
       
       stage('testing'){
-        echo getFolderName()
+        echo getFolderName
         echo 'hello'
       }
 
