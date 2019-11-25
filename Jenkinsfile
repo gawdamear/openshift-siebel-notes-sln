@@ -11,10 +11,8 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
-      def GITREMOTE = currentBuild.rawBuild.getPreviousSuccessfulBuild()
-      
       stage('testing'){
-        echo GITREMOTE
+        sh(returnStdout: true, script: 'git rev-parse HEAD')
         echo 'hello'
       }
 
