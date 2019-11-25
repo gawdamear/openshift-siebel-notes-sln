@@ -12,7 +12,7 @@ node('dotnet-22'){
       def buildWithdotNetVersion = 'dotnet:2.2'
       
       stage('testing'){
-        git log -1 --pretty=%h
+        git "log -1 --pretty=%h"
         echo 'hello'
       }
 
