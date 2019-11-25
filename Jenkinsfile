@@ -12,7 +12,6 @@ node('dotnet-22'){
       def buildWithdotNetVersion = 'dotnet:2.2'
 
       stage('testing'){
-        sh "git log"
         git credentialsId: "dotnet-dotnettest-github", branch: "master", url: "https://github.com/gawdamear/openshift-siebel-notes-sln.git"
         echo 'hello'
       }
