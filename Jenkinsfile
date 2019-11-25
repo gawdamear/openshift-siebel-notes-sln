@@ -15,7 +15,7 @@ node('dotnet-22'){
       
       stage('testing'){
         dir (workingFolder) {
-          echo 'ref: refs/heads/ML_#94_FILTER_TYPES_AND_SPECIAL_CHARS > .git/HEAD'
+          echo getLastSuccessfulCommit()
           echo 'hello'        
         }        
       }
@@ -57,6 +57,17 @@ node('dotnet-22'){
     finally {
       cleanUpWorkspace()
     }     
+}
+
+def getLastSuccessfulCommit() {
+    def lastSuccessfulHash = null
+    def lastSuccessfulBuild = currentBuild.rawBuild.getPreviousSuccessfulBuild()
+    
+    if ( lastSuccessfulBuild ) {
+        lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
+    }
+
+    return lastSuccessfulHash
 }
 
 def checkout (){
