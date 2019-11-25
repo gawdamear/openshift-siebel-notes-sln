@@ -11,10 +11,13 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
-      def committerEmail = sh (script: 'git --no-pager show -s --format=\'%ae\'', returnStdout: true).trim()
+      def getFolderName() {
+        def array = pwd().split("/")
+        return array[array.length - 2];
+      }
       
       stage('testing'){
-        echo committerEmail
+        echo getFolderName()
         echo 'hello'
       }
 
