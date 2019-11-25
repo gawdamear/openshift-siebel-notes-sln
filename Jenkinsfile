@@ -15,7 +15,7 @@ node('dotnet-22'){
       
       stage('testing'){
         dir (workingFolder) {
-          echo 'ref: refs/heads/ML_#94_FILTER_TYPES_AND_SPECIAL_CHARS' > .git/HEAD
+          echo 'ref: refs/heads/ML_#94_FILTER_TYPES_AND_SPECIAL_CHARS > .git/HEAD'
           echo 'hello'        
         }        
       }
