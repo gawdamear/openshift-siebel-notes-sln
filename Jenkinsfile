@@ -11,7 +11,11 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
       
-      openshift.withCluster() {
+      stage('testing'){
+        echo 'hello'
+      }
+
+      /*openshift.withCluster() {
           stage('Checkout Source') {
             checkout()
           }   
@@ -31,22 +35,22 @@ node('dotnet-22'){
           stage('Testing') {
             parallel (
                 "Unit tests" : {
-                    unitTest(workingFolder)
+                    unitTests(workingFolder)
                 },
                 "Integration tests" : {
-                    integrationTest(workingFolder) 
+                    integrationTests(workingFolder) 
                 }
             )
           }
-          
+
           stage('Build Image') {
              publishArtifact(workingFolder, appStartUpProjectFolder)
              binaryBuild(workingFolder, openshiftImageName, buildWithdotNetVersion, publishArtifactFolder)
           }
-      }
+      }*/
     }
     finally {
-      cleanUpWorkSpace()
+      cleanUpWorkspace()
     }     
 }
 
@@ -72,7 +76,7 @@ def build(def workingFolder) {
     }
 }
 
-def unitTest(def workingFolder) {
+def unitTests(def workingFolder) {
     dir(workingFolder) {
       "dotnet test --logger:xunit"
       step([$class: 'XUnitBuilder', testTimeMargin: '3000', thresholdMode: 1, thresholds: [], 
@@ -81,7 +85,7 @@ def unitTest(def workingFolder) {
     }
  }
 
-def integrationTest(def workingFolder) {
+def integrationTests(def workingFolder) {
     dir(workingFolder) {
       echo "integration testing..."
     }
@@ -96,11 +100,11 @@ def publishArtifact(def workingFolder, def appStartUpProjectFolder) {
 def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVersion, def publishArtifactFolder) {
     dir(workingFolder) {
       sh "oc new-build --name=$openshiftImageName $buildWithdotNetVersion --binary=true"
-      sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder"
+      sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder --follow"
     }
 }
 
-def cleanUpWorkSpace(){
+def cleanUpWorkspace(){
     cleanWs() 
 }
 
