@@ -16,11 +16,8 @@ node('dotnet-22'){
       stage('testing'){
         dir (workingFolder) {
           checkout()
-          //sh "ls -la"
-          //sh "git init"
           lastGitCommit = getLastGitCommit()
           echo "lastGitCommit: ${lastGitCommit}"
-          //sh "git log --pretty=format:'%h' -n 1"
         }        
       }
 
@@ -61,13 +58,6 @@ node('dotnet-22'){
     finally {
       cleanUpWorkspace()
     }     
-}
-
-def getLastGitCommit(){
-  return sh (
-    script: 'git log --pretty=format:\'%h\' -n 1', 
-    returnStdout: true)
-    .trim()
 }
 
 def checkout (){
@@ -118,6 +108,13 @@ def binaryBuild(def workingFolder, def openshiftImageName, def buildWithdotNetVe
       sh "oc new-build --name=$openshiftImageName $buildWithdotNetVersion --binary=true"
       sh "oc start-build $openshiftImageName --from-dir=$publishArtifactFolder --follow"
     }
+}
+
+def getLastGitCommit(){
+  return sh (
+    script: 'git log --pretty=format:\'%h\' -n 1', 
+    returnStdout: true)
+    .trim()
 }
 
 def cleanUpWorkspace(){
