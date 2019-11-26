@@ -18,6 +18,7 @@ node('dotnet-22'){
         dir (workingFolder) {
           checkout()
           sh "ls -la"
+          sh "git init"
           echo 'hello'        
         }        
       }
