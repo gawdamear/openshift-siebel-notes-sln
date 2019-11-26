@@ -14,12 +14,10 @@ node('dotnet-22'){
       //def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
       //clone https://gawdamear:4xTe75RVg!@github.com/gawdamear/openshift-siebel-notes-sln.git
 
-      def foundFiles = sh(script: 'ls', returnStdout: true).split()
-
       stage('testing'){
         dir (workingFolder) {
-          sh "ls -la /tmp/workspace/dotnet"
-          echo foundFiles
+          checkout()
+          sh "ls -la"
           echo 'hello'        
         }        
       }
