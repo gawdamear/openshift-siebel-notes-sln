@@ -11,7 +11,8 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
-      def GIT_COMMIT_EMAIL = sh (script: 'git log --pretty=format:\'%h\' -n 1', returnStdout: true).trim()
+      def lastGitCommit = null
+
       //def commitHash = sh(returnStdout: true, script: 'git log --pretty=format:%h -n 1').trim().take(7)
       //clone https://gawdamear:4xTe75RVg!@github.com/gawdamear/openshift-siebel-notes-sln.git
 
@@ -20,7 +21,8 @@ node('dotnet-22'){
           checkout()
           //sh "ls -la"
           //sh "git init"
-          echo "Git committer hash: ${GIT_COMMIT_EMAIL}" 
+          lastGitCommit = getLastGitCommit()
+          echo lastGitCommit
           //sh "git log --pretty=format:'%h' -n 1"
         }        
       }
@@ -62,6 +64,13 @@ node('dotnet-22'){
     finally {
       cleanUpWorkspace()
     }     
+}
+
+def getLastGitCommit(){
+  return sh (
+    script: 'git log --pretty=format:\'%h\' -n 1', 
+    returnStdout: true)
+    .trim()
 }
 
 def checkout (){
