@@ -19,8 +19,8 @@ node('dotnet-22'){
           checkout()
           sh "ls -la"
           sh "git init"
-          sh "git log --pretty=format:'%h' -n 1"
-          echo 'hello'        
+          echo 'last commit' sh "git log --pretty=format:'%h' -n 1"
+          //sh "git log --pretty=format:'%h' -n 1"
         }        
       }
 
