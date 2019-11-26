@@ -13,16 +13,13 @@ node('dotnet-22'){
 
       def lastGitCommit = null
 
-      //def commitHash = sh(returnStdout: true, script: 'git log --pretty=format:%h -n 1').trim().take(7)
-      //clone https://gawdamear:4xTe75RVg!@github.com/gawdamear/openshift-siebel-notes-sln.git
-
       stage('testing'){
         dir (workingFolder) {
           checkout()
           //sh "ls -la"
           //sh "git init"
           lastGitCommit = getLastGitCommit()
-          echo lastGitCommit
+          echo "lastGitCommit: ${lastGitCommit}"
           //sh "git log --pretty=format:'%h' -n 1"
         }        
       }
