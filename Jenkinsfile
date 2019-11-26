@@ -12,12 +12,11 @@ node('dotnet-22'){
       def buildWithdotNetVersion = 'dotnet:2.2'
 
       //def commitHash = sh(returnStdout: true, script: 'git rev-parse HEAD').trim().take(7)
-      
+      //clone https://gawdamear:4xTe75RVg!@github.com/gawdamear/openshift-siebel-notes-sln.git
+
       stage('testing'){
         dir (workingFolder) {
-          sh "git clone https://gawdamear:4xTe75RVg!@github.com/gawdamear/openshift-siebel-notes-sln.git"
-          sh "git init"
-          sh "git log -1"
+          sh "ls"
           echo 'hello'        
         }        
       }
@@ -59,17 +58,6 @@ node('dotnet-22'){
     finally {
       cleanUpWorkspace()
     }     
-}
-
-def getLastSuccessfulCommit() {
-    def lastSuccessfulHash = null
-    def lastSuccessfulBuild = currentBuild.rawBuild.getPreviousSuccessfulBuild()
-    
-    if ( lastSuccessfulBuild ) {
-        lastSuccessfulHash = commitHashForBuild( lastSuccessfulBuild )
-    }
-
-    return lastSuccessfulHash
 }
 
 def checkout (){
