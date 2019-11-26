@@ -19,7 +19,7 @@ node('dotnet-22'){
           checkout()
           sh "ls -la"
           sh "git init"
-          sh "git show --summary"
+          sh "git log --pretty=format:'%h' -n 1"
           echo 'hello'        
         }        
       }
