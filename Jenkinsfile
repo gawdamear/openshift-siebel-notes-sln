@@ -17,8 +17,8 @@ node('dotnet-22'){
       stage('testing'){
         dir (workingFolder) {
           checkout()
-          sh "ls -la"
-          sh "git init"
+          //sh "ls -la"
+          //sh "git init"
           echo 'last commit' 
           sh "git log --pretty=format:'%h' -n 1"
           //sh "git log --pretty=format:'%h' -n 1"
