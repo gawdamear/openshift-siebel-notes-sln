@@ -11,6 +11,7 @@ node('dotnet-22'){
 
       def buildWithdotNetVersion = 'dotnet:2.2'
 
+      def GIT_COMMIT_EMAIL = sh (script: 'git log --pretty=format:\'%h\' -n 1', returnStdout: true).trim()
       //def commitHash = sh(returnStdout: true, script: 'git log --pretty=format:%h -n 1').trim().take(7)
       //clone https://gawdamear:4xTe75RVg!@github.com/gawdamear/openshift-siebel-notes-sln.git
 
@@ -19,8 +20,8 @@ node('dotnet-22'){
           checkout()
           //sh "ls -la"
           //sh "git init"
-          echo 'hello' 
-          sh "git log --pretty=format:'%h' -n 1"
+          echo "Git committer hash: ${GIT_COMMIT_EMAIL}" 
+          //sh "git log --pretty=format:'%h' -n 1"
         }        
       }
 
