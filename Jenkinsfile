@@ -16,6 +16,7 @@ node('dotnet-22'){
       stage('testing'){
         dir (workingFolder) {
           checkout()
+          sh "git describe --dirty"
           lastGitCommit = getLastGitCommit()
           echo "lastGitCommit: ${lastGitCommit}"
         }        
