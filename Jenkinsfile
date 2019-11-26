@@ -18,7 +18,7 @@ node('dotnet-22'){
 
       stage('testing'){
         dir (workingFolder) {
-          sh "ls -la ${pwd()}"
+          sh "ls -la /tmp/workspace/dotnet"
           echo foundFiles
           echo 'hello'        
         }        
